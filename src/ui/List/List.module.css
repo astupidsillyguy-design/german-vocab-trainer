@@ -1,0 +1,131 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.header {
+  padding-inline: var(--space-lg);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.footer {
+  padding-inline: var(--space-lg);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  position: relative;
+}
+
+/* 行间缩进分隔线（对齐文字起点，与 iOS 一致） */
+.row + .row::before {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline: var(--space-lg) 0;
+  block-size: var(--hairline);
+  content: '';
+  background: var(--color-separator-default);
+}
+
+.static,
+.interactive {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  inline-size: 100%;
+  min-block-size: var(--control-height-md);
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line-height);
+  color: inherit;
+  text-align: start;
+}
+
+.custom {
+  display: grid;
+  gap: var(--space-sm);
+  padding: var(--space-md) var(--space-lg);
+}
+
+.interactive {
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: inherit;
+  outline: none;
+  transition: background-color var(--fade-fast) var(--spring-smooth);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.interactive[data-hovered] {
+  background: var(--color-fill-quaternary);
+}
+
+.interactive[data-pressed] {
+  background: var(--color-fill-tertiary);
+}
+
+.interactive[data-focus-visible] {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: calc(var(--geometry-focus-ring-offset) * -1);
+}
+
+.row:first-child .interactive {
+  border-start-start-radius: var(--radius-lg);
+  border-start-end-radius: var(--radius-lg);
+}
+
+.row:last-child .interactive {
+  border-end-start-radius: var(--radius-lg);
+  border-end-end-radius: var(--radius-lg);
+}
+
+.leading {
+  display: inline-flex;
+  flex: none;
+  color: var(--color-tint-text);
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.title {
+  overflow-wrap: anywhere;
+}
+
+.subtitle {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.trailing {
+  display: inline-flex;
+  flex: none;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.detail {
+  color: var(--color-label-secondary);
+}
+
+.chevron {
+  color: var(--color-label-tertiary);
+}

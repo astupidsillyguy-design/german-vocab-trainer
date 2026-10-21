@@ -1,0 +1,74 @@
+.bar {
+  position: sticky;
+  inset-block-start: 0;
+  z-index: var(--z-bar);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--space-sm);
+  align-items: center;
+  min-block-size: calc(var(--geometry-nav-bar-height) + env(safe-area-inset-top));
+  padding-block-start: env(safe-area-inset-top);
+  padding-inline: var(--layout-margin);
+  margin-inline: calc(var(--layout-margin) * -1);
+}
+
+/* 玻璃背景层：仅在内容滚到导航栏下方时淡入 */
+.bar::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  background: var(--material-chrome-tint);
+  box-shadow: inset 0 calc(var(--hairline) * -1) 0 var(--color-separator-default);
+  opacity: 0;
+  transition: opacity var(--fade-standard) var(--spring-smooth);
+  -webkit-backdrop-filter: blur(var(--material-chrome-blur))
+    saturate(var(--material-chrome-saturation));
+  backdrop-filter: blur(var(--material-chrome-blur)) saturate(var(--material-chrome-saturation));
+}
+
+.bar[data-collapsed]::before {
+  opacity: 1;
+}
+
+.leading,
+.trailing {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.trailing {
+  justify-content: flex-end;
+}
+
+.inlineTitle {
+  overflow: hidden;
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bar[data-large-title] .inlineTitle {
+  opacity: 0;
+  transition: opacity var(--fade-fast) var(--spring-smooth);
+}
+
+.bar[data-large-title][data-collapsed] .inlineTitle {
+  opacity: 1;
+}
+
+.largeTitle {
+  padding-block: var(--space-xxs) var(--space-sm);
+  font-size: var(--type-large-title-size);
+  font-weight: var(--type-large-title-weight);
+  line-height: var(--type-large-title-line-height);
+  letter-spacing: calc(var(--type-large-title-tracking) * var(--tracking-enabled, 1));
+}
+
+.sentinel {
+  block-size: 0;
+}

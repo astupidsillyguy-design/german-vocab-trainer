@@ -1,0 +1,235 @@
+.page {
+  display: grid;
+  gap: var(--space-xl);
+  padding-block-end: var(--space-xxl);
+}
+
+.intro {
+  max-inline-size: var(--content-max-width-reading);
+  margin: 0;
+  color: var(--color-label-secondary);
+}
+
+/* —— 冲突提示 —— */
+
+.conflict {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-lg);
+}
+
+.conflictTitle {
+  margin: 0;
+  font-weight: var(--type-headline-weight);
+}
+
+.conflictMessage {
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.conflictActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-xs);
+}
+
+/* —— 布局：手机与平板单栏；宽屏左侧编辑器（固定在视口内），右侧格式说明与预览 —— */
+
+.layout {
+  display: grid;
+  grid-template-areas:
+    'help'
+    'editor'
+    'preview';
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+
+.help {
+  display: grid;
+  grid-area: help;
+  gap: var(--space-xl);
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  grid-area: editor;
+  gap: var(--space-md);
+}
+
+.previewColumn {
+  grid-area: preview;
+  min-inline-size: 0;
+}
+
+/* 定位到出错行时，编辑器滚入视口后不要被顶部导航栏挡住 */
+.editor textarea {
+  scroll-margin-block: calc(var(--geometry-nav-bar-height) + env(safe-area-inset-top))
+    var(--shell-nav-inset-end);
+}
+
+.page[data-size-class='expanded'] .layout {
+  grid-template:
+    'editor help' auto
+    'editor preview' 1fr / minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.page[data-size-class='expanded'] .editor {
+  --words-editor-top: calc(
+    var(--geometry-nav-bar-height) + env(safe-area-inset-top) + var(--space-sm)
+  );
+
+  position: sticky;
+  inset-block-start: var(--words-editor-top);
+  block-size: calc(100dvh - var(--words-editor-top) - var(--space-xl));
+}
+
+.page[data-size-class='expanded'] .editor .editorField {
+  flex: 1;
+  min-block-size: 0;
+}
+
+.page[data-size-class='expanded'] .editor textarea {
+  flex: 1;
+  min-block-size: 0;
+  resize: none;
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  min-block-size: var(--control-height-sm);
+}
+
+.discard {
+  margin-inline-start: auto;
+}
+
+/* —— 格式说明 —— */
+
+.rules {
+  display: grid;
+  gap: var(--space-md);
+  margin: 0;
+}
+
+.rule {
+  display: grid;
+  gap: var(--space-xxxs);
+}
+
+.ruleLabel {
+  font-weight: var(--type-headline-weight);
+}
+
+.ruleFormat,
+.ruleExample {
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.ruleExample code {
+  font-family: var(--font-mono);
+  color: var(--color-label-primary);
+  overflow-wrap: anywhere;
+}
+
+.footnote {
+  margin: var(--space-lg) 0 0;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+/* —— 预览 —— */
+
+.preview {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.previewHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.previewTitle {
+  margin: 0;
+}
+
+/* 解析通常在同一帧内完成；只有持续一段时间才显示“正在更新”，避免每次输入都闪一下 */
+.updating {
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+  visibility: hidden;
+}
+
+.preview[data-pending] .updating {
+  animation: wordsReveal 0s linear var(--words-pending-delay, 300ms) forwards;
+}
+
+@keyframes wordsReveal {
+  to {
+    visibility: visible;
+  }
+}
+
+.previewEmpty {
+  margin: 0;
+  color: var(--color-label-secondary);
+}
+
+.summary {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.summaryText {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-secondary);
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.lineNumber {
+  min-inline-size: 3ch;
+  font-family: var(--font-mono);
+  font-size: var(--type-caption1-size);
+  line-height: var(--type-caption1-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-tertiary);
+  text-align: end;
+}
+
+.dangerIcon {
+  display: inline-flex;
+  color: var(--color-danger-text);
+}
+
+.warningIcon {
+  display: inline-flex;
+  color: var(--color-warning-text);
+}
+
+.showMore {
+  justify-self: center;
+}

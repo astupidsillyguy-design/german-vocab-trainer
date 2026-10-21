@@ -1,0 +1,71 @@
+.surface {
+  position: relative;
+  border-radius: var(--surface-radius);
+
+  /* 阴影画在元素本身：它不受 clip-path 影响，模糊后的圆角差异肉眼不可见 */
+  box-shadow: var(--surface-shadow);
+}
+
+/* 子元素需要定位，才能绘制在材质层（::before）之上；不会创建 backdrop root */
+:where(.surface) > * {
+  position: relative;
+}
+
+/* 材质层：着色 + 背景模糊 + 高光描边，超椭圆裁剪只作用于这一层 */
+.surface::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: '';
+  background: var(--surface-tint, transparent);
+  border-radius: inherit;
+  box-shadow:
+    inset 0 var(--hairline) 0 var(--surface-highlight, transparent),
+    inset 0 0 0 var(--hairline) var(--surface-rim, transparent);
+  clip-path: var(--surface-clip, none);
+  -webkit-backdrop-filter: blur(var(--surface-blur, 0)) saturate(var(--surface-saturation, 1));
+  backdrop-filter: blur(var(--surface-blur, 0)) saturate(var(--surface-saturation, 1));
+}
+
+.surface[data-material='regular'] {
+  --surface-tint: var(--material-regular-tint);
+  --surface-blur: var(--material-regular-blur);
+  --surface-saturation: var(--material-regular-saturation);
+  --surface-highlight: var(--material-regular-highlight);
+  --surface-rim: var(--material-regular-rim);
+}
+
+.surface[data-material='clear'] {
+  --surface-tint: var(--material-clear-tint);
+  --surface-blur: var(--material-clear-blur);
+  --surface-saturation: var(--material-clear-saturation);
+  --surface-highlight: var(--material-clear-highlight);
+  --surface-rim: var(--material-clear-rim);
+}
+
+.surface[data-material='thick'] {
+  --surface-tint: var(--material-thick-tint);
+  --surface-blur: var(--material-thick-blur);
+  --surface-saturation: var(--material-thick-saturation);
+  --surface-highlight: var(--material-thick-highlight);
+  --surface-rim: var(--material-thick-rim);
+}
+
+.surface[data-material='chrome'] {
+  --surface-tint: var(--material-chrome-tint);
+  --surface-blur: var(--material-chrome-blur);
+  --surface-saturation: var(--material-chrome-saturation);
+  --surface-highlight: var(--material-chrome-highlight);
+  --surface-rim: var(--material-chrome-rim);
+}
+
+@supports (corner-shape: squircle) {
+  .surface[data-squircle] {
+    border-radius: calc(var(--surface-radius) * var(--radius-squircle-scale));
+    corner-shape: squircle;
+  }
+
+  .surface[data-squircle]::before {
+    corner-shape: squircle;
+  }
+}

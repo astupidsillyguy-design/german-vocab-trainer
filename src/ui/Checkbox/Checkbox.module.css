@@ -1,0 +1,53 @@
+.field {
+  min-inline-size: 0;
+}
+
+.checkbox {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  min-block-size: var(--control-height-md);
+  color: var(--color-label-primary);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.box {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--geometry-checkbox-size);
+  block-size: var(--geometry-checkbox-size);
+  color: var(--color-label-on-solid);
+  background: var(--color-background-primary);
+  border-radius: var(--radius-capsule);
+  box-shadow: inset 0 0 0 var(--geometry-focus-ring-width) var(--color-separator-opaque);
+  transition:
+    transform var(--spring-press-duration) var(--spring-press),
+    background-color var(--fade-fast) var(--spring-smooth);
+}
+
+.checkbox[data-selected] .box,
+.checkbox[data-indeterminate] .box {
+  background: var(--color-tint-base);
+  box-shadow: none;
+}
+
+.checkbox[data-pressed] .box {
+  transform: scale(var(--press-scale-key));
+}
+
+.checkbox[data-focus-visible] .box {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--geometry-focus-ring-offset);
+}
+
+.checkbox[data-disabled] {
+  cursor: default;
+  opacity: var(--disabled-opacity);
+}
+
+.labelText {
+  flex: 1;
+  min-inline-size: 0;
+}

@@ -1,0 +1,73 @@
+/*
+ * 页面切换（View Transitions API）。方向写在 <html data-nav-direction> 上，见 src/motion/navigation.ts。
+ * 不支持该 API 的浏览器直接切换。
+ */
+
+/* 同级页面（Tab 之间）：整页交叉淡化。壁纸与导航在新旧画面中逐像素相同，叠加后不变，看起来只有内容在换 */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--fade-standard);
+  animation-timing-function: var(--spring-smooth);
+}
+
+/*
+ * 进入下一级 / 返回时内容区单独成层。只在过渡期间命名：
+ * 带 view-transition-name 的元素会成为 backdrop root，常驻会让其中的玻璃模糊不到壁纸。
+ */
+:root[data-nav-direction='forward'] [data-view-transition='main-content'],
+:root[data-nav-direction='back'] [data-view-transition='main-content'] {
+  view-transition-name: main-content;
+}
+
+/* 内容区的外框直接换成新页面的尺寸，新旧画面都贴顶，不做拉伸 */
+::view-transition-group(main-content) {
+  animation: none;
+}
+
+/* 进入下一级：新页面从行尾推入，旧页面向行首退后并变淡（iOS 导航栈的视差） */
+:root[data-nav-direction='forward']::view-transition-old(main-content) {
+  animation: navRecede var(--spring-sheet-duration) var(--spring-sheet) both;
+}
+
+:root[data-nav-direction='forward']::view-transition-new(main-content) {
+  animation: navPushIn var(--spring-sheet-duration) var(--spring-sheet) both;
+}
+
+/* 返回：反向 */
+:root[data-nav-direction='back']::view-transition-old(main-content) {
+  animation: navPushIn var(--spring-sheet-duration) var(--spring-sheet) both reverse;
+}
+
+:root[data-nav-direction='back']::view-transition-new(main-content) {
+  animation: navRecede var(--spring-sheet-duration) var(--spring-sheet) both reverse;
+}
+
+/* 减少动态效果：所有方向都只淡入淡出 */
+@media (prefers-reduced-motion: reduce) {
+  :root[data-nav-direction]::view-transition-old(main-content) {
+    animation: navFade var(--fade-standard) var(--spring-smooth) both reverse;
+  }
+
+  :root[data-nav-direction]::view-transition-new(main-content) {
+    animation: navFade var(--fade-standard) var(--spring-smooth) both;
+  }
+}
+
+@keyframes navPushIn {
+  from {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes navRecede {
+  to {
+    opacity: 0;
+    transform: translateX(-30%);
+  }
+}
+
+@keyframes navFade {
+  from {
+    opacity: 0;
+  }
+}

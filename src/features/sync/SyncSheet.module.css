@@ -1,0 +1,304 @@
+/* 设备同步面板（F-070 – F-081） */
+
+.body {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.section {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.sectionTitle,
+.viewTitle {
+  margin: 0;
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+  letter-spacing: var(--type-headline-tracking);
+  color: var(--color-label-primary);
+}
+
+.viewTitle {
+  text-align: center;
+}
+
+.sectionTitle:focus,
+.viewTitle:focus {
+  outline: none;
+}
+
+.sectionTitle:focus-visible,
+.viewTitle:focus-visible {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--geometry-focus-ring-offset);
+  border-radius: var(--radius-xs);
+}
+
+.note {
+  margin: 0;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.error {
+  margin: 0;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-danger-text);
+}
+
+.value {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-secondary);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.centered {
+  display: grid;
+  gap: var(--space-md);
+  justify-items: center;
+  padding-block: var(--space-xl);
+  text-align: center;
+}
+
+.endedIcon,
+.waitingIcon {
+  color: var(--color-label-tertiary);
+}
+
+/* —— 配对码 —— */
+
+.codeCard {
+  display: grid;
+  gap: var(--space-lg);
+  justify-items: center;
+  padding: var(--space-xl);
+  border-radius: var(--radius-lg);
+  background: var(--color-fill-quaternary);
+}
+
+.codeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: center;
+}
+
+.code {
+  font-size: var(--type-large-title-size);
+  font-weight: var(--type-large-title-weight);
+  line-height: var(--type-large-title-line-height);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-primary);
+  white-space: pre;
+}
+
+/* 相机需要足够的对比度：二维码始终是白底黑码 */
+.qr {
+  inline-size: var(--geometry-pairing-qr-size);
+  block-size: var(--geometry-pairing-qr-size);
+  padding: var(--space-sm);
+  border-radius: var(--radius-md);
+  background: var(--color-background-primary);
+  fill: var(--color-label-primary);
+}
+
+.codeCard .note {
+  text-align: center;
+}
+
+.joinForm {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.codeField {
+  max-inline-size: var(--content-max-width-alert);
+}
+
+.problem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-warning-subtle);
+}
+
+.problemText {
+  flex: 1 1 var(--content-max-width-menu);
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-primary);
+}
+
+/* —— 扫码 —— */
+
+.scanner {
+  display: grid;
+  gap: var(--space-md);
+  justify-items: center;
+}
+
+.viewfinder {
+  position: relative;
+  overflow: hidden;
+  inline-size: min(100%, var(--geometry-scanner-size));
+  aspect-ratio: 1;
+  border-radius: var(--radius-lg);
+  background: var(--color-fill-secondary);
+}
+
+.video {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+}
+
+.frame {
+  position: absolute;
+  inset: var(--space-xxl);
+  border: var(--geometry-focus-ring-width) solid var(--color-label-on-solid);
+  border-radius: var(--radius-md);
+  pointer-events: none;
+}
+
+.viewfinderOverlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+/* —— 已连接 —— */
+
+.peerBar {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-lg);
+  border-radius: var(--radius-capsule);
+  background: var(--color-success-subtle);
+}
+
+.peerIcon {
+  flex: none;
+  color: var(--color-success-text);
+}
+
+.peerName {
+  flex: 1;
+  min-inline-size: 0;
+  overflow-wrap: anywhere;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-primary);
+}
+
+.footer {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.progress {
+  inline-size: min(100%, var(--content-max-width-alert));
+}
+
+.outcome {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-md);
+  background: var(--color-fill-quaternary);
+}
+
+.outcome[data-tone='success'] {
+  background: var(--color-success-subtle);
+}
+
+.outcome[data-tone='danger'] {
+  background: var(--color-danger-subtle);
+}
+
+.outcomeIcon {
+  flex: none;
+  color: var(--color-label-secondary);
+}
+
+.outcome[data-tone='success'] .outcomeIcon {
+  color: var(--color-success-text);
+}
+
+.outcome[data-tone='danger'] .outcomeIcon {
+  color: var(--color-danger-text);
+}
+
+.outcomeText {
+  flex: 1 1 var(--content-max-width-menu);
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-primary);
+}
+
+/* —— 按课时选择 —— */
+
+.pickerToolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chapter {
+  display: grid;
+  gap: var(--space-xs);
+}
+
+.choice {
+  inline-size: 100%;
+}
+
+.chapterName {
+  font-weight: var(--type-headline-weight);
+}
+
+.count {
+  margin-inline-start: auto;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-secondary);
+}
+
+.lessons {
+  display: grid;
+  gap: var(--space-xs);
+  margin: 0;
+  padding: 0;
+  padding-inline-start: var(--space-xxxl);
+  list-style: none;
+}

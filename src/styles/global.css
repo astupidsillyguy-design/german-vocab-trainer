@@ -1,0 +1,135 @@
+/*
+ * 全局基线：盒模型重置、根排版、可访问性兜底。
+ * 所有数值均来自 virtual:design-tokens.css 生成的变量。
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizelegibility;
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  min-block-size: 100dvh;
+  color: var(--color-label-primary);
+
+  /* 与 GlassWallpaper 的 CSS 档是同一幅渐变：脚本还没就绪时，首帧已经是最终的背景 */
+  background: var(--wallpaper-gradient), var(--color-wallpaper-base);
+  background-attachment: fixed;
+  font-family: var(--font-text);
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line-height);
+  font-weight: var(--type-body-weight);
+  font-synthesis-weight: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+figure {
+  margin: 0;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--color-tint-text);
+}
+
+::selection {
+  background: var(--color-tint-subtle);
+}
+
+/* 键盘焦点：React Aria 组件用 data-focus-visible 自行绘制，这里兜底原生元素 */
+:focus-visible {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--geometry-focus-ring-offset);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * 拖动排序（src/ui/Reorder）：状态写在列表项的 data-reorder-state 上。
+ * 位移由脚本写入 translate；这里只定义过渡与“浮起”的外观。
+ * “减少动态效果”时弹簧时长为 0、--lift-scale 为 1：位置瞬间到位，也不放大。
+ */
+[data-reorder-state] {
+  position: relative;
+}
+
+[data-reorder-state='shifting'] {
+  transition: translate var(--spring-snappy-duration) var(--spring-snappy);
+}
+
+[data-reorder-state='lifted'],
+[data-reorder-state='settling'] {
+  z-index: var(--z-raised);
+  border-radius: var(--reorder-radius, var(--radius-lg));
+}
+
+[data-reorder-state='lifted'] {
+  scale: var(--lift-scale);
+  box-shadow: var(--shadow-3);
+  transition:
+    scale var(--spring-snappy-duration) var(--spring-snappy),
+    box-shadow var(--spring-snappy-duration) var(--spring-snappy);
+}
+
+[data-reorder-state='settling'] {
+  transition:
+    translate var(--spring-smooth-duration) var(--spring-smooth),
+    scale var(--spring-smooth-duration) var(--spring-smooth),
+    box-shadow var(--spring-smooth-duration) var(--spring-smooth);
+}
+
+html[data-reordering],
+html[data-reordering] * {
+  cursor: grabbing;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

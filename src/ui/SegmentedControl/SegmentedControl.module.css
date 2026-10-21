@@ -1,0 +1,73 @@
+.group {
+  --segment-inset: var(--space-xxxs);
+  --segment-height: var(--control-height-sm);
+
+  position: relative;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  padding: var(--segment-inset);
+  background: var(--color-fill-tertiary);
+  border-radius: var(--radius-capsule);
+  user-select: none;
+  touch-action: pan-y;
+}
+
+.group[data-size='md'] {
+  --segment-height: calc(var(--control-height-md) - 2 * var(--segment-inset));
+}
+
+.group[data-disabled] {
+  opacity: var(--disabled-opacity);
+}
+
+.thumb {
+  position: absolute;
+  inset-block: var(--segment-inset);
+  inset-inline-start: var(--segment-inset);
+  inline-size: calc((100% - 2 * var(--segment-inset)) / var(--segment-count));
+  background: var(--color-background-primary);
+  border-radius: var(--radius-capsule);
+  box-shadow: var(--shadow-2);
+  translate: calc(100% * var(--selection-position, 0)) 0;
+  scale: calc(var(--selection-lift, 1) * (1 + var(--selection-stretch, 0)))
+    calc(var(--selection-lift, 1) * (1 - var(--selection-stretch, 0) / 2));
+}
+
+.segment {
+  position: relative;
+  display: inline-flex;
+  gap: var(--space-xxs);
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--segment-height);
+  min-inline-size: 0;
+  padding-inline: var(--space-sm);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--type-subhead-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-capsule);
+  outline: none;
+  transition: color var(--fade-standard) var(--spring-smooth);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.segment[data-selected] {
+  color: var(--color-label-primary);
+}
+
+.segment[data-focus-visible] {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: calc(var(--geometry-focus-ring-offset) * -1);
+}
+
+.icon {
+  display: inline-flex;
+}

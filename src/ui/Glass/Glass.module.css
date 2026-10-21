@@ -1,0 +1,107 @@
+/*
+ * Liquid Glass 的 CSS 部分：
+ * - 着色、模糊、描边沿用 Surface 的材质层（::before），由 LiquidGlass 以变量注入各变体的 token；
+ * - refraction 档在 backdrop-filter 前叠加 SVG 位移滤镜；
+ * - webgl 档在引擎画出第一帧后（data-glass-rendered）关闭 CSS 材质与阴影，交给画布绘制。
+ */
+
+/* 指针高光的不透明度注册为数值属性，才能平滑过渡 */
+@property --glass-pointer-opacity {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+.glass[data-variant='prominent'] {
+  color: var(--color-label-on-solid);
+}
+
+.glass[data-interactive] {
+  transition: --glass-pointer-opacity var(--glass-pointer-ease) ease-out;
+}
+
+.glass[data-pointer] {
+  --glass-pointer-opacity: 1;
+}
+
+/* 高光画在材质层里：位于文字之下，不降低文字对比度 */
+.glass[data-interactive]::before {
+  background:
+    radial-gradient(
+      circle var(--glass-pointer-radius) at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 50%),
+      color-mix(
+        in srgb,
+        var(--color-label-on-solid)
+          calc(var(--glass-pointer-strength) * var(--glass-pointer-opacity) * 100%),
+        transparent
+      ),
+      transparent
+    ),
+    var(--surface-tint, transparent);
+}
+
+.glass[data-refraction]::before {
+  backdrop-filter: var(--glass-refraction) blur(var(--surface-blur, 0))
+    saturate(var(--surface-saturation, 1));
+}
+
+.glass[data-tier='webgl']:is([data-glass-rendered], [data-glass-rendered] *) {
+  box-shadow: none;
+}
+
+.glass[data-tier='webgl']:is([data-glass-rendered], [data-glass-rendered] *)::before {
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* 玻璃组：子元素需要定位，才能绘制在画布之上 */
+.group {
+  position: relative;
+}
+
+:where(.group) > * {
+  position: relative;
+}
+
+/* 引擎画布：向四周外扩，容纳着色器绘制的投影 */
+.canvas {
+  position: absolute;
+  inset-block-start: calc(-1 * var(--glass-canvas-bleed));
+  inset-inline-start: calc(-1 * var(--glass-canvas-bleed));
+  inline-size: calc(100% + 2 * var(--glass-canvas-bleed));
+  block-size: calc(100% + 2 * var(--glass-canvas-bleed));
+  pointer-events: none;
+}
+
+/* 动态壁纸：CSS 渐变是 t = 0 时 WebGL 的同一画面，引擎就绪后画布淡入 */
+.wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-wallpaper);
+  pointer-events: none;
+  background: var(--wallpaper-gradient), var(--color-wallpaper-base);
+}
+
+.wallpaperCanvas {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  opacity: 0;
+  transition: opacity var(--fade-standard) ease-out;
+}
+
+.wallpaper[data-glass-rendered] > .wallpaperCanvas {
+  opacity: 1;
+}
+
+/* SVG 滤镜定义：不占布局、不可见 */
+.filterDefs {
+  position: absolute;
+  inline-size: 0;
+  block-size: 0;
+  overflow: hidden;
+  pointer-events: none;
+}

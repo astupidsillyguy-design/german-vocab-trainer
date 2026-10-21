@@ -1,0 +1,127 @@
+.region {
+  position: fixed;
+  inset-inline: 0;
+  z-index: var(--z-toast);
+  display: flex;
+  padding-inline: var(--layout-margin);
+  pointer-events: none;
+}
+
+/* 手机：顶部居中，从上方落下 */
+.region[data-placement='top'] {
+  --toast-offscreen: translateY(-100%);
+
+  inset-block-start: calc(env(safe-area-inset-top) + var(--space-sm));
+  justify-content: center;
+}
+
+/* 平板与桌面：右下角，从屏幕边缘滑入 */
+.region[data-placement='bottom-end'] {
+  --toast-offscreen: translateX(100%);
+
+  inset-block-end: calc(env(safe-area-inset-bottom) + var(--layout-margin));
+  justify-content: flex-end;
+}
+
+:root[dir='rtl'] .region[data-placement='bottom-end'] {
+  --toast-offscreen: translateX(-100%);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  inline-size: 100%;
+  max-inline-size: var(--content-max-width-toast);
+}
+
+/* 入场与退场用 transform；JS 的滑动与补位写 translate，两者叠加互不覆盖 */
+.item {
+  pointer-events: auto;
+  user-select: none;
+  animation: toastEnter var(--spring-bouncy-duration) var(--spring-bouncy);
+  touch-action: none;
+}
+
+.item[data-exiting] {
+  pointer-events: none;
+  animation: toastExit var(--fade-standard) var(--spring-smooth) forwards;
+}
+
+.item[data-exit='swipe'] {
+  animation: none;
+}
+
+.toast {
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-lg);
+}
+
+.content {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+}
+
+.item[data-tone='success'] .icon {
+  color: var(--color-success-text);
+}
+
+.item[data-tone='danger'] .icon {
+  color: var(--color-danger-text);
+}
+
+.text {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.title {
+  font-size: var(--type-subhead-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-subhead-line-height);
+}
+
+.description {
+  overflow: hidden;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 减少动态效果：只淡入淡出 */
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    animation: toastFade var(--fade-standard) var(--spring-smooth);
+  }
+
+  .item[data-exiting] {
+    animation: toastFade var(--fade-standard) var(--spring-smooth) reverse forwards;
+  }
+}
+
+@keyframes toastEnter {
+  from {
+    opacity: 0;
+    transform: var(--toast-offscreen) scale(var(--overlay-enter-scale));
+  }
+}
+
+@keyframes toastExit {
+  to {
+    opacity: 0;
+    transform: scale(var(--overlay-enter-scale));
+  }
+}
+
+@keyframes toastFade {
+  from {
+    opacity: 0;
+  }
+}

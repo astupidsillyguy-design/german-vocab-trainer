@@ -1,0 +1,81 @@
+.description {
+  max-inline-size: var(--content-max-width-reading);
+  color: var(--color-label-secondary);
+}
+
+.labs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--content-max-width-panel)), 1fr));
+  gap: var(--space-xxl);
+}
+
+.lab {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.title {
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+}
+
+.hint {
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+/* 抛掷场地：玻璃球在内层 track 中移动，track 的尺寸就是可到达范围 */
+.arena {
+  position: relative;
+  block-size: calc(5 * var(--control-height-xl));
+  background: var(--color-fill-quaternary);
+  border-radius: var(--radius-xl);
+}
+
+.track {
+  position: absolute;
+  inset: var(--space-lg);
+}
+
+.puck {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: calc(2 * var(--control-height-lg));
+  block-size: calc(2 * var(--control-height-lg));
+  cursor: grab;
+  outline: none;
+  touch-action: none;
+  user-select: none;
+}
+
+.puck:active {
+  cursor: grabbing;
+}
+
+.puck:focus-visible {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--geometry-focus-ring-offset);
+}
+
+.dropletGroup {
+  display: flex;
+  justify-content: space-between;
+  padding: var(--space-xxxl) var(--space-huge);
+}
+
+.droplet {
+  inline-size: calc(2 * var(--control-height-md));
+  block-size: calc(2 * var(--control-height-md));
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.readout {
+  display: flex;
+  justify-content: flex-start;
+}

@@ -1,0 +1,74 @@
+.sections {
+  display: grid;
+  gap: var(--space-xl);
+  max-inline-size: var(--content-max-width-reading);
+  margin-inline: auto;
+  padding-block-end: var(--space-xxl);
+}
+
+.action {
+  color: var(--color-tint-text);
+}
+
+.destructive {
+  color: var(--color-danger-text);
+}
+
+.placeholder {
+  color: var(--color-label-secondary);
+}
+
+.value {
+  color: var(--color-label-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.itemLabel {
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line-height);
+}
+
+.sheetBody {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.field {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.note {
+  margin: 0;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.error {
+  color: var(--color-danger-text);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.help {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.steps,
+.notes {
+  display: grid;
+  gap: var(--space-xs);
+  margin: 0;
+  padding-inline-start: var(--space-xl);
+}
+
+.steps {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+}

@@ -1,0 +1,47 @@
+.popover {
+  max-inline-size: min(var(--content-max-width-toast), calc(100vw - 2 * var(--layout-margin)));
+  outline: none;
+  transform-origin: var(--trigger-anchor-point);
+}
+
+.popover[data-entering] {
+  animation: popIn var(--spring-snappy-duration) var(--spring-snappy);
+}
+
+.popover[data-exiting] {
+  animation: popIn var(--fade-fast) var(--spring-smooth) reverse;
+}
+
+.panel {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.dialog {
+  outline: none;
+}
+
+.title {
+  margin-block-end: var(--space-xs);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.arrow svg {
+  display: block;
+  inline-size: var(--space-md);
+  block-size: var(--space-md);
+  fill: var(--material-thick-tint);
+}
+
+.arrow[data-placement='bottom'] svg {
+  transform: rotate(180deg);
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(var(--overlay-enter-scale));
+  }
+}

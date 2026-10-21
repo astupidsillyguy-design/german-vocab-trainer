@@ -1,0 +1,180 @@
+.button {
+  --button-height: var(--control-height-md);
+  --button-padding: var(--space-xl);
+  --button-foreground: var(--color-label-primary);
+  --button-background: transparent;
+
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  gap: var(--space-xs);
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--button-height);
+  min-inline-size: var(--button-height);
+  padding-inline: var(--button-padding);
+  font-family: var(--font-text);
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+  color: var(--button-foreground);
+  letter-spacing: calc(var(--type-headline-tracking) * var(--tracking-enabled, 1));
+  white-space: nowrap;
+  cursor: pointer;
+  user-select: none;
+  background: var(--button-background);
+  border: 0;
+  border-radius: var(--radius-capsule);
+  outline: none;
+  transition:
+    background-color var(--fade-standard) var(--spring-smooth),
+    color var(--fade-standard) var(--spring-smooth),
+    opacity var(--fade-standard) var(--spring-smooth);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.button[data-focus-visible] {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: var(--geometry-focus-ring-offset);
+}
+
+.button[data-disabled] {
+  cursor: default;
+  opacity: var(--disabled-opacity);
+}
+
+.button[data-full-width] {
+  inline-size: 100%;
+}
+
+.button[data-size='sm'] {
+  --button-height: var(--control-height-sm);
+  --button-padding: var(--space-md);
+
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+}
+
+.button[data-size='lg'] {
+  --button-height: var(--control-height-lg);
+  --button-padding: var(--space-xxl);
+}
+
+.button[data-shape='circle'] {
+  padding-inline: 0;
+}
+
+/* 视觉尺寸较小的图标按钮，用伪元素把点击区域扩到 44pt */
+.button[data-shape='circle'][data-size='sm']::after {
+  position: absolute;
+  inset: calc((var(--control-height-sm) - var(--control-height-md)) / 2);
+  content: '';
+}
+
+.button[data-variant='glass'] {
+  --button-background: var(--material-regular-tint);
+
+  isolation: isolate;
+
+  box-shadow:
+    inset 0 var(--hairline) 0 var(--material-regular-highlight),
+    0 0 0 var(--hairline) var(--material-regular-rim),
+    var(--shadow-1);
+  -webkit-backdrop-filter: blur(var(--material-regular-blur))
+    saturate(var(--material-regular-saturation));
+  backdrop-filter: blur(var(--material-regular-blur)) saturate(var(--material-regular-saturation));
+}
+
+/* 玻璃按钮跟随指针的高光（位置由 JS 弹簧写入）；画在文字之下 */
+.button[data-variant='glass']::before {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  content: '';
+  background: radial-gradient(
+    circle var(--glass-pointer-radius) at var(--glass-pointer-x, 50%) var(--glass-pointer-y, 50%),
+    color-mix(
+      in srgb,
+      var(--color-label-on-solid) calc(var(--glass-pointer-strength) * 100%),
+      transparent
+    ),
+    transparent
+  );
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--glass-pointer-ease) ease-out;
+}
+
+.button[data-variant='glass'][data-pointer]::before {
+  opacity: 1;
+}
+
+.button[data-variant='filled'] {
+  --button-background: var(--color-tint-base);
+  --button-foreground: var(--color-label-on-solid);
+}
+
+.button[data-variant='filled'][data-pressed] {
+  --button-background: var(--color-tint-pressed);
+}
+
+.button[data-variant='tinted'] {
+  --button-background: var(--color-tint-subtle);
+  --button-foreground: var(--color-tint-text);
+}
+
+.button[data-variant='plain'] {
+  --button-foreground: var(--color-tint-text);
+}
+
+.button[data-variant='plain'][data-hovered] {
+  --button-background: var(--color-fill-quaternary);
+}
+
+.button[data-variant='destructive'] {
+  --button-background: var(--color-danger-solid);
+  --button-foreground: var(--color-label-on-solid);
+}
+
+.button[data-variant='key'] {
+  --button-background: var(--color-background-primary);
+  --button-padding: var(--space-sm);
+
+  font-size: var(--type-title3-size);
+  font-weight: var(--type-body-weight);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-1);
+}
+
+.button[data-variant='key'][data-pressed] {
+  --button-background: var(--color-fill-tertiary);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  transition: opacity var(--fade-fast) var(--spring-smooth);
+}
+
+.button[data-pending] .label,
+.button[data-pending] .icon {
+  opacity: 0;
+}
+
+.pendingOverlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.link {
+  text-decoration: none;
+}

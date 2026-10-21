@@ -1,0 +1,53 @@
+.progress {
+  --progress-fill: var(--color-tint-base);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.progress[data-tone='success'] {
+  --progress-fill: var(--color-success-solid);
+}
+
+.progress[data-tone='danger'] {
+  --progress-fill: var(--color-danger-solid);
+}
+
+.progress[data-tone='warning'] {
+  --progress-fill: var(--color-warning-solid);
+}
+
+.labels {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: baseline;
+  justify-content: space-between;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+}
+
+.label {
+  font-weight: var(--type-headline-weight);
+}
+
+.value {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-label-secondary);
+}
+
+.track {
+  overflow: hidden;
+  block-size: var(--geometry-slider-track-height);
+  background: var(--color-fill-secondary);
+  border-radius: var(--radius-capsule);
+}
+
+.fill {
+  block-size: 100%;
+  background: var(--progress-fill);
+  border-radius: inherit;
+  transform: scaleX(var(--progress));
+  transform-origin: left center;
+  transition: transform var(--spring-smooth-duration) var(--spring-smooth);
+}

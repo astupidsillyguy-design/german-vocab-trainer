@@ -1,0 +1,74 @@
+.badge {
+  --badge-foreground: var(--color-label-secondary);
+  --badge-background: var(--color-fill-tertiary);
+
+  display: inline-flex;
+  flex: none;
+  gap: var(--space-xxs);
+  align-items: center;
+  justify-content: center;
+  min-block-size: var(--control-height-sm);
+  min-inline-size: var(--control-height-sm);
+  padding-inline: var(--space-sm);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-headline-weight);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--type-footnote-line-height);
+  color: var(--badge-foreground);
+  white-space: nowrap;
+  background: var(--badge-background);
+  border-radius: var(--radius-capsule);
+}
+
+.badge[data-size='sm'] {
+  min-block-size: var(--space-xl);
+  min-inline-size: var(--space-xl);
+  padding-inline: var(--space-xs);
+  font-size: var(--type-caption2-size);
+  line-height: var(--type-caption2-line-height);
+}
+
+.badge[data-tone='tint'] {
+  --badge-foreground: var(--color-tint-text);
+  --badge-background: var(--color-tint-subtle);
+}
+
+.badge[data-tone='success'] {
+  --badge-foreground: var(--color-success-text);
+  --badge-background: var(--color-success-subtle);
+}
+
+.badge[data-tone='danger'] {
+  --badge-foreground: var(--color-danger-text);
+  --badge-background: var(--color-danger-subtle);
+}
+
+.badge[data-tone='warning'] {
+  --badge-foreground: var(--color-warning-text);
+  --badge-background: var(--color-warning-subtle);
+}
+
+.badge[data-variant='solid'] {
+  --badge-foreground: var(--color-label-on-solid);
+  --badge-background: var(--color-label-secondary);
+}
+
+.badge[data-variant='solid'][data-tone='tint'] {
+  --badge-background: var(--color-tint-base);
+}
+
+.badge[data-variant='solid'][data-tone='success'] {
+  --badge-background: var(--color-success-solid);
+}
+
+.badge[data-variant='solid'][data-tone='danger'] {
+  --badge-background: var(--color-danger-solid);
+}
+
+.badge[data-variant='solid'][data-tone='warning'] {
+  --badge-background: var(--color-warning-solid);
+}
+
+.icon {
+  display: inline-flex;
+}

@@ -1,0 +1,38 @@
+.spinner {
+  --spinner-size: var(--geometry-icon-md);
+
+  position: relative;
+  display: inline-block;
+  flex: none;
+  inline-size: var(--spinner-size);
+  block-size: var(--spinner-size);
+  color: currentcolor;
+  animation: spin var(--spinner-period) steps(var(--spoke-count)) infinite;
+}
+
+.spinner[data-size='sm'] {
+  --spinner-size: var(--geometry-icon-sm);
+}
+
+.spinner[data-size='lg'] {
+  --spinner-size: var(--geometry-icon-lg);
+}
+
+.spoke {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: calc(50% - var(--spinner-size) * var(--spoke-width-ratio) / 2);
+  inline-size: calc(var(--spinner-size) * var(--spoke-width-ratio));
+  block-size: calc(var(--spinner-size) * var(--spoke-length-ratio));
+  background: currentcolor;
+  border-radius: var(--radius-capsule);
+  opacity: var(--spoke-opacity);
+  transform: rotate(calc(-360deg / var(--spoke-count) * var(--spoke-index)));
+  transform-origin: 50% calc(var(--spinner-size) / 2);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

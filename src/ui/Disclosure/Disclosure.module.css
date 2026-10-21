@@ -1,0 +1,158 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.disclosure[data-appearance='inset'] {
+  --reorder-radius: var(--radius-md);
+}
+
+.inset {
+  background: var(--color-fill-quaternary);
+  border-radius: var(--radius-md);
+}
+
+/* 标题行：展开按钮的伪元素铺满整行（z-index -1，位于文字之下），把手与操作按钮自然处在它上方 */
+.header {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  min-block-size: var(--control-height-lg);
+  padding-inline: var(--space-lg);
+}
+
+.disclosure[data-appearance='inset'] .header {
+  min-block-size: var(--control-height-md);
+  padding-inline: var(--space-md);
+}
+
+.leading {
+  display: inline-flex;
+  flex: none;
+  gap: var(--space-xxs);
+  align-items: center;
+  margin-inline-start: calc(var(--space-sm) * -1);
+}
+
+.heading {
+  flex: 1;
+  min-inline-size: 0;
+  font: inherit;
+}
+
+.trigger {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  inline-size: 100%;
+  padding-block: var(--space-sm);
+  padding-inline: 0;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.trigger::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: '';
+  border-radius: var(--radius-lg);
+  transition: background-color var(--fade-fast) var(--spring-smooth);
+}
+
+.disclosure[data-appearance='inset'] .trigger::after {
+  border-radius: var(--radius-md);
+}
+
+@media (hover: hover) {
+  .trigger[data-hovered]::after {
+    background: var(--color-fill-quaternary);
+  }
+}
+
+.trigger[data-pressed]::after {
+  background: var(--color-fill-tertiary);
+}
+
+.trigger[data-focus-visible]::after {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+  outline-offset: calc(var(--geometry-focus-ring-offset) * -1);
+}
+
+.text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.title {
+  overflow-wrap: anywhere;
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+}
+
+.disclosure[data-appearance='inset'] .title {
+  font-size: var(--type-callout-size);
+  line-height: var(--type-callout-line-height);
+}
+
+.subtitle {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.disclosure[data-appearance='inset'] .subtitle {
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+}
+
+.accessory {
+  display: inline-flex;
+  flex: none;
+}
+
+.actions {
+  display: inline-flex;
+  flex: none;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+/* 箭头只是装饰：点击穿透到下方的展开按钮 */
+.chevron {
+  flex: none;
+  color: var(--color-label-secondary);
+  pointer-events: none;
+  transition: transform var(--spring-snappy-duration) var(--spring-snappy);
+}
+
+.chevron[data-expanded] {
+  transform: rotate(180deg);
+}
+
+.panel {
+  padding-inline: var(--space-lg);
+}
+
+.disclosure[data-appearance='inset'] .panel {
+  padding-inline: var(--space-md);
+}
+
+.panel[data-expanded] {
+  padding-block-end: var(--space-lg);
+}
+
+.disclosure[data-appearance='inset'] .panel[data-expanded] {
+  padding-block-end: var(--space-md);
+}

@@ -1,0 +1,166 @@
+.page {
+  display: grid;
+
+  /* minmax(0, …)：长词条或标题不会把整列撑出屏幕 */
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg);
+  inline-size: 100%;
+  max-inline-size: var(--content-max-width-reading);
+  margin-inline: auto;
+  padding-block-end: var(--space-xxl);
+}
+
+.stats {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.toolbar {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.search {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+/* —— 模式说明 —— */
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-md);
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+}
+
+.bannerText {
+  /* 说明文字至少保留一行菜单宽度；放不下时按钮整体换到下一行，而不是把文字挤成窄条 */
+  flex: 1 1 var(--content-max-width-menu);
+  min-inline-size: 0;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+}
+
+.banner[data-mode='delete'] .bannerText {
+  color: var(--color-danger-text);
+}
+
+.bannerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-inline-start: auto;
+}
+
+/* —— 章节、课时与词条 —— */
+
+.lessons {
+  padding-block-start: var(--space-xs);
+}
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  padding-block-start: var(--space-xxs);
+}
+
+.entry {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  min-block-size: var(--control-height-md);
+  padding-block: var(--space-sm);
+}
+
+.entry + .entry {
+  border-block-start: var(--hairline) solid var(--color-separator-default);
+}
+
+/* 编辑模式：双击 / 双触整行即可修改；禁止双击选中文字与双触缩放 */
+.entry[data-mode='edit'] {
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.entryText {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-xxxs);
+  min-inline-size: 0;
+}
+
+.word {
+  overflow-wrap: anywhere;
+  font-size: var(--type-body-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-body-line-height);
+}
+
+.alternatives {
+  overflow-wrap: anywhere;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.prompt {
+  overflow-wrap: anywhere;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.meta {
+  font-size: var(--type-caption1-size);
+  line-height: var(--type-caption1-line-height);
+  color: var(--color-label-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+.entryActions {
+  display: flex;
+  flex: none;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+/* —— 组合测试底栏：悬浮在 Tab Bar 之上（宽屏贴近视口底部） —— */
+
+.comboBar {
+  position: sticky;
+  inset-block-end: max(
+    var(--shell-nav-inset-end),
+    calc(var(--space-lg) + env(safe-area-inset-bottom))
+  );
+  z-index: var(--z-bar);
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-lg);
+}
+
+.comboCount {
+  font-weight: var(--type-headline-weight);
+  font-variant-numeric: tabular-nums;
+}
+
+/* —— 编辑面板 —— */
+
+.form {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.formError {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-danger-text);
+}

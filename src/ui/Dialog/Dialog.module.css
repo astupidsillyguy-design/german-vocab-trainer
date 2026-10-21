@@ -1,0 +1,75 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: grid;
+  place-items: center;
+  padding: var(--layout-margin);
+  background: var(--color-background-scrim);
+}
+
+.overlay[data-entering] {
+  animation: fadeIn var(--fade-standard) var(--spring-smooth);
+}
+
+.overlay[data-exiting] {
+  animation: fadeIn var(--fade-fast) var(--spring-smooth) reverse;
+}
+
+.modal {
+  inline-size: 100%;
+  max-inline-size: var(--content-max-width-alert);
+  outline: none;
+}
+
+.modal[data-entering] {
+  animation: zoomIn var(--spring-bouncy-duration) var(--spring-bouncy);
+}
+
+.modal[data-exiting] {
+  animation: zoomIn var(--fade-fast) var(--spring-smooth) reverse;
+}
+
+.panel {
+  padding: var(--space-xxl) var(--space-xl) var(--space-xl);
+}
+
+.dialog {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  text-align: center;
+  outline: none;
+}
+
+.title {
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+}
+
+.message {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-block-start: var(--space-md);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(var(--overlay-enter-scale));
+  }
+}

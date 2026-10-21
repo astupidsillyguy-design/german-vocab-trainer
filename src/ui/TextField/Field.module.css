@@ -1,0 +1,149 @@
+.field {
+  --field-height: var(--control-height-md);
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  min-inline-size: 0;
+}
+
+.field[data-size='xl'] {
+  --field-height: var(--control-height-xl);
+}
+
+.label {
+  padding-inline: var(--space-xxs);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.control {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  min-block-size: var(--field-height);
+  padding-inline: var(--space-lg) var(--space-xs);
+  background: var(--color-background-primary);
+  border-radius: var(--radius-md);
+  box-shadow:
+    inset 0 0 0 var(--hairline) var(--color-separator-default),
+    var(--shadow-1);
+  transition: box-shadow var(--fade-standard) var(--spring-smooth);
+}
+
+.field[data-variant='search'] .control {
+  padding-inline-start: var(--space-md);
+  background: var(--color-fill-tertiary);
+  border-radius: var(--radius-capsule);
+  box-shadow: none;
+}
+
+.field[data-focus-within] .control,
+.control:focus-within {
+  box-shadow:
+    inset 0 0 0 var(--geometry-focus-ring-width) var(--color-focus-ring),
+    var(--shadow-1);
+}
+
+.field[data-invalid] .control {
+  box-shadow:
+    inset 0 0 0 var(--geometry-focus-ring-width) var(--color-danger-fill),
+    var(--shadow-1);
+}
+
+.field[data-disabled] .control {
+  opacity: var(--disabled-opacity);
+}
+
+.leading {
+  display: inline-flex;
+  color: var(--color-label-secondary);
+}
+
+.input,
+.textarea {
+  flex: 1;
+  min-inline-size: 0;
+  padding: 0;
+  font-size: var(--type-body-size);
+  line-height: var(--type-body-line-height);
+  color: var(--color-label-primary);
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.field[data-size='xl'] .input {
+  font-size: var(--type-title3-size);
+  line-height: var(--type-title3-line-height);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-label-placeholder);
+  opacity: 1;
+}
+
+/* 去掉浏览器自带的搜索清除按钮，统一使用组件内的清除按钮 */
+.input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.textarea {
+  min-block-size: var(--control-height-lg);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-background-primary);
+  border-radius: var(--radius-md);
+  box-shadow:
+    inset 0 0 0 var(--hairline) var(--color-separator-default),
+    var(--shadow-1);
+  resize: vertical;
+}
+
+.textarea[data-focused] {
+  box-shadow:
+    inset 0 0 0 var(--geometry-focus-ring-width) var(--color-focus-ring),
+    var(--shadow-1);
+}
+
+.textarea[data-monospace] {
+  font-family: var(--font-mono);
+  font-size: var(--type-subhead-size);
+}
+
+.clear {
+  display: grid;
+  flex: none;
+  place-items: center;
+  inline-size: var(--control-height-md);
+  block-size: var(--control-height-md);
+  padding: 0;
+  color: var(--color-label-secondary);
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-capsule);
+  outline: none;
+  transition: transform var(--spring-press-duration) var(--spring-press);
+}
+
+.clear[data-pressed] {
+  transform: scale(var(--press-scale-key));
+}
+
+.description {
+  padding-inline: var(--space-xxs);
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.error {
+  padding-inline: var(--space-xxs);
+  font-size: var(--type-footnote-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-danger-text);
+}

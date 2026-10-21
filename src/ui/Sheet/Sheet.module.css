@@ -1,0 +1,201 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-sheet);
+  display: grid;
+}
+
+/* 遮罩单独成层：下滑关闭时随拖动距离变淡（--sheet-scrim-opacity 由 JS 写入） */
+.overlay::before {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: var(--color-background-scrim);
+  opacity: var(--sheet-scrim-opacity, 1);
+}
+
+.overlay[data-entering] {
+  animation: fadeIn var(--fade-standard) var(--spring-smooth);
+}
+
+.overlay[data-exiting] {
+  animation: fadeIn var(--fade-standard) var(--spring-smooth) reverse;
+}
+
+.modal {
+  position: relative;
+  outline: none;
+}
+
+/* JS 接管位置期间（拖动与松手后的弹簧）不做档位过渡，避免两套动画叠加 */
+.modal[data-presentation][data-dragging] {
+  transition: none;
+}
+
+/* 已经滑出屏幕：不再播放退场动画 */
+.modal[data-exit='swipe'][data-exiting] {
+  animation: none;
+}
+
+/* —— compact：从底部升起，悬浮于屏幕边缘之内（Liquid Glass 风格） —— */
+.modal[data-presentation='bottom'] {
+  --sheet-edge-inset: var(--space-xs);
+  --sheet-large-height: calc(
+    100dvh - var(--sheet-large-top-inset) - env(safe-area-inset-top) - var(--sheet-edge-inset) -
+      env(safe-area-inset-bottom)
+  );
+  --sheet-medium-height: min(var(--sheet-detent-medium), var(--sheet-large-height));
+  --sheet-detent-offset: 0px;
+
+  position: fixed;
+  inset-block-end: calc(var(--sheet-edge-inset) + env(safe-area-inset-bottom));
+  inset-inline: var(--sheet-edge-inset);
+  block-size: var(--sheet-large-height);
+  transform: translateY(var(--sheet-detent-offset));
+  transition: transform var(--spring-sheet-duration) var(--spring-sheet);
+}
+
+.modal[data-presentation='bottom'][data-detent='medium'] {
+  --sheet-detent-offset: calc(var(--sheet-large-height) - var(--sheet-medium-height));
+}
+
+.modal[data-presentation='bottom'][data-entering] {
+  animation: slideUp var(--spring-sheet-duration) var(--spring-sheet);
+}
+
+.modal[data-presentation='bottom'][data-exiting] {
+  animation: slideUp var(--fade-standard) var(--spring-smooth) reverse;
+}
+
+/* —— regular / expanded：居中表单面板 —— */
+.modal[data-presentation='center'] {
+  place-self: center;
+  inline-size: calc(100% - 2 * var(--layout-margin));
+  max-inline-size: var(--content-max-width-panel);
+  max-block-size: calc(100dvh - 2 * var(--layout-margin));
+}
+
+.modal[data-presentation='center'][data-entering] {
+  animation: zoomIn var(--spring-bouncy-duration) var(--spring-bouncy);
+}
+
+.modal[data-presentation='center'][data-exiting] {
+  animation: zoomIn var(--fade-fast) var(--spring-smooth) reverse;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  block-size: 100%;
+  max-block-size: inherit;
+}
+
+.dialog {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-block-size: 0;
+  outline: none;
+}
+
+.chrome {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+}
+
+/* 手机上把手与标题栏是拖动区域：不交给页面滚动，也不选中文字 */
+.modal[data-presentation='bottom'] .chrome {
+  user-select: none;
+  touch-action: none;
+}
+
+.handle {
+  display: grid;
+  flex: none;
+  place-items: center;
+  align-self: center;
+  inline-size: var(--control-height-md);
+  block-size: var(--control-height-sm);
+  margin-block-end: calc(var(--space-xs) * -1);
+  padding: 0;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: var(--radius-capsule);
+  outline: none;
+}
+
+.handle[data-focus-visible] {
+  outline: var(--geometry-focus-ring-width) solid var(--color-focus-ring);
+}
+
+.grabber {
+  inline-size: var(--geometry-sheet-handle-width);
+  block-size: var(--geometry-sheet-handle-height);
+  background: var(--color-fill-primary);
+  border-radius: var(--radius-capsule);
+  transition: transform var(--spring-press-duration) var(--spring-press);
+}
+
+.handle[data-pressed] .grabber {
+  transform: scale(var(--press-scale));
+}
+
+.header {
+  display: flex;
+  flex: none;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: var(--geometry-nav-bar-height);
+  padding-inline: var(--space-xl) var(--space-md);
+}
+
+.modal[data-presentation='center'] .header {
+  padding-block-start: var(--space-md);
+}
+
+.title {
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+}
+
+.body {
+  flex: 1;
+  min-block-size: 0;
+  padding: var(--space-xs) var(--space-xl) var(--space-xl);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* 中档时面板下移了 offset，内容底部补同样的距离，确保最后一行可滚动到可见区域 */
+.modal[data-presentation='bottom'] .body {
+  padding-block-end: calc(var(--space-xl) + var(--sheet-detent-offset));
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(var(--overlay-enter-scale));
+  }
+}

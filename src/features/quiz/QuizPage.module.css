@@ -1,0 +1,319 @@
+/* —— 页面：单栏，限制在阅读宽度内居中（宽屏上题卡不会被拉得过宽） —— */
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg);
+  inline-size: 100%;
+  max-inline-size: var(--content-max-width-reading);
+  margin-inline: auto;
+  padding-block-end: var(--space-xxl);
+}
+
+/* —— 头部：范围、轮次、进度与正误计数 —— */
+
+.header {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.scopeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs) var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+}
+
+.scope {
+  display: -webkit-box;
+  overflow: hidden;
+  min-inline-size: 0;
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.round {
+  flex-shrink: 0;
+}
+
+.tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.wrongButton {
+  color: var(--color-danger-text);
+}
+
+.wrongEmpty {
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  color: var(--color-label-secondary);
+}
+
+.wrongList {
+  display: grid;
+  overflow-y: auto;
+  max-block-size: min(50dvh, var(--content-max-width-alert));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wrongItem {
+  display: grid;
+  gap: var(--space-xxxs);
+  padding-block: var(--space-sm);
+  border-block-start: var(--hairline) solid var(--color-separator-default);
+}
+
+.wrongItem:first-child {
+  padding-block-start: 0;
+  border-block-start: 0;
+}
+
+.wrongSection {
+  overflow: hidden;
+  font-size: var(--type-caption1-size);
+  line-height: var(--type-caption1-line-height);
+  color: var(--color-label-secondary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.wrongAnswer {
+  font-weight: var(--type-headline-weight);
+  overflow-wrap: anywhere;
+}
+
+.wrongInput {
+  font-size: var(--type-subhead-size);
+  color: var(--color-danger-text);
+  overflow-wrap: anywhere;
+}
+
+/* —— 题卡 —— */
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+}
+
+.page[data-size-class='compact'] .card {
+  padding: var(--space-lg);
+}
+
+.questionPop {
+  animation: questionIn var(--spring-snappy-duration) var(--spring-snappy);
+}
+
+.question {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.section {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+  min-inline-size: 0;
+  margin: 0;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-tint-text);
+}
+
+.section svg {
+  flex-shrink: 0;
+}
+
+.sectionName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.instruction {
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+}
+
+.prompt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  align-items: center;
+  margin: 0;
+  font-size: var(--type-title1-size);
+  font-weight: var(--type-title1-weight);
+  line-height: var(--type-title1-line-height);
+  letter-spacing: var(--type-title1-tracking);
+  overflow-wrap: anywhere;
+}
+
+.promptBadge {
+  letter-spacing: var(--type-footnote-tracking);
+}
+
+/* —— 作答 —— */
+
+.form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.field[data-result='wrong'] {
+  animation: shake var(--spring-bouncy-duration) var(--spring-smooth);
+}
+
+.keys {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--space-xs);
+}
+
+.key {
+  inline-size: 100%;
+}
+
+.hint {
+  margin: 0;
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-warning-text);
+}
+
+.hint:empty {
+  display: none;
+}
+
+/* —— 反馈 —— */
+
+.feedback {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-md) var(--space-lg);
+  border-radius: var(--radius-lg);
+  animation: questionIn var(--spring-snappy-duration) var(--spring-snappy);
+}
+
+.feedback[data-result='correct'] {
+  background: var(--color-success-subtle);
+}
+
+.feedback[data-result='wrong'] {
+  background: var(--color-danger-subtle);
+}
+
+.feedbackHeader {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+  min-block-size: var(--control-height-sm);
+}
+
+.feedbackTitle {
+  display: flex;
+  gap: var(--space-xs);
+  align-items: center;
+  margin: 0;
+  font-weight: var(--type-headline-weight);
+}
+
+.feedback[data-result='correct'] .feedbackTitle {
+  color: var(--color-success-text);
+}
+
+.feedback[data-result='wrong'] .feedbackTitle {
+  color: var(--color-danger-text);
+}
+
+.feedbackLine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xxs) var(--space-sm);
+  align-items: baseline;
+  margin: 0;
+}
+
+.feedbackLine[data-secondary] {
+  font-size: var(--type-subhead-size);
+  color: var(--color-label-secondary);
+}
+
+.feedbackLabel {
+  font-size: var(--type-subhead-size);
+  color: var(--color-label-secondary);
+}
+
+.answer {
+  font-weight: var(--type-headline-weight);
+  overflow-wrap: anywhere;
+}
+
+/* 字母级对比：保留空格（多写或漏写的空格以底色显示） */
+.diff {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.diffMark {
+  border-radius: var(--radius-xs);
+}
+
+.diffMark[data-kind='extra'] {
+  color: var(--color-danger-text);
+  text-decoration: line-through;
+  text-decoration-thickness: var(--geometry-focus-ring-width);
+  background: var(--color-danger-subtle);
+}
+
+.diffMark[data-kind='missing'] {
+  font-weight: var(--type-title1-weight);
+  color: var(--color-success-text);
+  text-decoration: underline;
+  text-decoration-thickness: var(--geometry-focus-ring-width);
+  text-underline-offset: var(--space-xxxs);
+  background: var(--color-success-subtle);
+}
+
+/* —— 空状态 —— */
+
+.emptyCard {
+  max-inline-size: var(--content-max-width-reading);
+  margin-inline: auto;
+  padding: var(--space-xl);
+}
+
+@keyframes questionIn {
+  from {
+    opacity: 0;
+    transform: scale(var(--overlay-enter-scale));
+  }
+}
+
+@keyframes shake {
+  20%,
+  60% {
+    transform: translateX(calc(-1 * var(--space-xs)));
+  }
+
+  40%,
+  80% {
+    transform: translateX(var(--space-xs));
+  }
+}

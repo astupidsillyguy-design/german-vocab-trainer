@@ -1,0 +1,215 @@
+/* —— 本轮结果：与题卡同宽，单栏 —— */
+
+.result {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-lg);
+}
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+  padding: var(--space-xl);
+  animation: resultIn var(--spring-smooth-duration) var(--spring-smooth);
+}
+
+.result[data-size-class='compact'] .card {
+  padding: var(--space-lg);
+}
+
+.hero {
+  display: grid;
+  gap: var(--space-xs);
+  justify-items: center;
+  text-align: center;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  inline-size: var(--control-height-xl);
+  block-size: var(--control-height-xl);
+  margin-block-end: var(--space-xs);
+  color: var(--color-tint-text);
+  background: var(--color-tint-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.result[data-outcome='passed'] .icon {
+  color: var(--color-success-text);
+  background: var(--color-success-subtle);
+  animation: celebrate var(--spring-bouncy-duration) var(--spring-bouncy);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--type-title2-size);
+  font-weight: var(--type-title2-weight);
+  line-height: var(--type-title2-line-height);
+  letter-spacing: var(--type-title2-tracking);
+  text-wrap: balance;
+  outline: none;
+}
+
+.summary {
+  max-inline-size: var(--content-max-width-alert);
+  margin: 0;
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+  text-wrap: balance;
+}
+
+/* —— 正确率与得分：两块并排的数字 —— */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-sm);
+  margin: 0;
+}
+
+.stat {
+  display: grid;
+  gap: var(--space-xxxs);
+  padding: var(--space-md);
+  text-align: center;
+  background: var(--color-fill-quaternary);
+  border-radius: var(--radius-lg);
+}
+
+.statLabel {
+  font-size: var(--type-footnote-size);
+  line-height: var(--type-footnote-line-height);
+  color: var(--color-label-secondary);
+}
+
+.statValue {
+  margin: 0;
+  font-size: var(--type-title1-size);
+  font-weight: var(--type-title1-weight);
+  font-variant-numeric: tabular-nums;
+  line-height: var(--type-title1-line-height);
+  letter-spacing: var(--type-title1-tracking);
+}
+
+.statValue[data-tone='tint'] {
+  color: var(--color-tint-text);
+}
+
+/* —— 通关说明与操作 —— */
+
+.note {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: flex-start;
+  margin: 0;
+  padding: var(--space-md);
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-success-text);
+  background: var(--color-success-subtle);
+  border-radius: var(--radius-lg);
+  outline: none;
+}
+
+.noteIcon {
+  flex-shrink: 0;
+}
+
+.actions {
+  display: grid;
+  gap: var(--space-sm);
+  inline-size: 100%;
+  max-inline-size: var(--content-max-width-alert);
+  margin-inline: auto;
+}
+
+/* —— 错题集 —— */
+
+.review {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.reviewHeader {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: var(--space-md);
+}
+
+.reviewTitle {
+  margin: 0;
+  font-size: var(--type-headline-size);
+  font-weight: var(--type-headline-weight);
+  line-height: var(--type-headline-line-height);
+}
+
+.reviewList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.reviewItem {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  padding: var(--space-md) var(--space-lg);
+  border-block-start: var(--hairline) solid var(--color-separator-default);
+}
+
+.reviewItem:first-child {
+  border-block-start: 0;
+}
+
+.reviewText {
+  display: grid;
+  flex: 1;
+  gap: var(--space-xxxs);
+  min-inline-size: 0;
+}
+
+.reviewContext {
+  overflow: hidden;
+  font-size: var(--type-caption1-size);
+  line-height: var(--type-caption1-line-height);
+  color: var(--color-label-tertiary);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reviewPrompt {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-label-secondary);
+  overflow-wrap: anywhere;
+}
+
+.reviewAnswer {
+  font-weight: var(--type-headline-weight);
+  overflow-wrap: anywhere;
+}
+
+.reviewInput {
+  font-size: var(--type-subhead-size);
+  line-height: var(--type-subhead-line-height);
+  color: var(--color-danger-text);
+  overflow-wrap: anywhere;
+}
+
+@keyframes resultIn {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-lg)) scale(var(--overlay-enter-scale));
+  }
+}
+
+@keyframes celebrate {
+  from {
+    transform: scale(var(--overlay-enter-scale)) rotate(-8deg);
+  }
+}
